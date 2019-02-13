@@ -10,6 +10,7 @@ public class RandomCardChoose {
 
 	private int MaxCardNo=32;
 	private VectorList<Integer> cards=new VectorList<Integer>();
+	private VectorList<Integer> cardOrders=new VectorList<Integer>();
 
 	public RandomCardChoose() {
 		LevelCardNoMap.put(1, 2);
@@ -59,6 +60,25 @@ public class RandomCardChoose {
 					}
 				}
 			}
+			
+			cardOrders.temizle();
+			randNumber = rand.nextInt(MaxCardNo);
+			cardOrders.ekle(randNumber);
+
+			for(int i=1; i<(cardNumber*2); i++)
+			{
+				randNumber = rand.nextInt(MaxCardNo);
+				state = true;
+				while(state)
+				{
+					if(cardOrders.bul(randNumber)!=-1)
+					{
+						cardOrders.ekle(randNumber);
+						state= false;
+					}
+				}
+			}
+
 		}
 		
 		return cardNumber;
