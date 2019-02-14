@@ -67,22 +67,22 @@ public class DefineCardBoundaries {
 
 	public void CalculateBoundaries(int cardNumber)
 	{
-		int rowNo, columnNo, posX, posY;
+		int rowNo, columnNo, posX, posY, posX1, posY1;
 		
 		boundaries.temizle();
 		if(RowNumber.containsKey(cardNumber))
 		{
 			rowNo = RowNumber.get(cardNumber);
 			columnNo = ColumnNumber.get(cardNumber);
-			posX = FirstElementX.get(cardNumber);
-			posY = FirstElementY.get(cardNumber);
-						
+			posX1 = FirstElementX.get(cardNumber);
+			posY1 = FirstElementY.get(cardNumber);
+			System.out.println("row:"+rowNo+" col:"+columnNo);	
 			for(int i=0; i<rowNo; i++)
 			{
-				for(int j=0; i<columnNo; j++)
+				posX = posX1 + 110*i;
+				for(int j=0; j<columnNo; j++)
 				{
-					posX += 110*i;
-					posY += 160*j;
+					posY = posY1 + 160*j;
 					boundaries.ekle(posX);
 					boundaries.ekle(posY);
 				}

@@ -11,6 +11,16 @@ public class RandomCardChoose {
 	private int MaxCardNo=32;
 	private VectorList<Integer> cards=new VectorList<Integer>();
 	private VectorList<Integer> cardOrders=new VectorList<Integer>();
+	private VectorList<Integer> cardIndis=new VectorList<Integer>();
+	private VectorList<Integer> cardTypes=new VectorList<Integer>();
+	
+	public VectorList<Integer> getCardOrders() {
+		return cardOrders;
+	}
+
+	public void setCardOrders(VectorList<Integer> cardOrders) {
+		this.cardOrders = cardOrders;
+	}
 
 	public RandomCardChoose() {
 		LevelCardNoMap.put(1, 2);
@@ -32,55 +42,88 @@ public class RandomCardChoose {
 		LevelCardNoMap.put(17, 14);
 		LevelCardNoMap.put(18, 16);
 		LevelCardNoMap.put(19, 16);
+		
+		cardIndis.ekle(0);
+		cardIndis.ekle(1);
+		cardIndis.ekle(2);
+		cardIndis.ekle(3);
+		cardIndis.ekle(4);
+		cardIndis.ekle(5);
+		cardIndis.ekle(6);
+		cardIndis.ekle(7);
+		cardIndis.ekle(8);
+		cardIndis.ekle(9);
+		cardIndis.ekle(10);
+		cardIndis.ekle(11);
+		cardIndis.ekle(12);
+		cardIndis.ekle(13);
+		cardIndis.ekle(14);
+		cardIndis.ekle(15);
+		cardIndis.ekle(16);
+		cardIndis.ekle(17);
+		cardIndis.ekle(18);
+		cardIndis.ekle(19);
+		cardIndis.ekle(20);
+		cardIndis.ekle(21);
+		cardIndis.ekle(22);
+		cardIndis.ekle(23);
+		cardIndis.ekle(24);
+		cardIndis.ekle(25);
+		cardIndis.ekle(26);
+		cardIndis.ekle(27);
+		cardIndis.ekle(28);
+		cardIndis.ekle(29);
+		cardIndis.ekle(30);
+		cardIndis.ekle(31);
 	}
 
 	public int SelectCards(int level, int MaxCardTypeNo)
 	{
 		int randNumber, cardNumber=0;
 		boolean state=false;
+		Random rand = new Random();
 
 		cards.temizle();
 		if(LevelCardNoMap.containsKey(level))
 		{
 			cardNumber = LevelCardNoMap.get(level);
-			Random rand = new Random();
 			randNumber = rand.nextInt(MaxCardTypeNo);
 			cards.ekle(randNumber);
-
+			
 			for(int i=1; i<cardNumber; i++)
 			{
 				randNumber = rand.nextInt(MaxCardTypeNo);
+				System.out.println("kontrol1"+" randno:"+randNumber);
 				state = true;
 				while(state)
 				{
-					if(cards.bul(randNumber)!=-1)
+					randNumber = rand.nextInt(MaxCardTypeNo);
+					if(cards.bul(randNumber)==-1)
 					{
 						cards.ekle(randNumber);
 						state= false;
 					}
+					System.out.println("kontrol1"+" randno:"+randNumber);
 				}
 			}
 			
 			cardOrders.temizle();
-			randNumber = rand.nextInt(MaxCardNo);
+			randNumber = rand.nextInt(cardNumber*2);
 			cardOrders.ekle(randNumber);
+			cardIndis.cikar(randNumber);
+			System.out.println("rand order : "+randNumber);
 
 			for(int i=1; i<(cardNumber*2); i++)
 			{
-				randNumber = rand.nextInt(MaxCardNo);
-				state = true;
-				while(state)
-				{
-					if(cardOrders.bul(randNumber)!=-1)
-					{
-						cardOrders.ekle(randNumber);
-						state= false;
-					}
-				}
+				randNumber = rand.nextInt(cardNumber*2-i);
+				cardOrders.ekle(cardIndis.getir(randNumber));
+				cardIndis.cikar(randNumber);
+				System.out.println("rand order : "+randNumber);
 			}
 
 		}
-		
+		System.out.println("orders");
+		cardOrders.yazdir(1);
 		return cardNumber;
 	}
 

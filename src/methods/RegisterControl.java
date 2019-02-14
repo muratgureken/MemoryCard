@@ -47,31 +47,6 @@ public class RegisterControl {
 		/*registers.txt dosyasini oku.*/
 		fReg = new File("C:\\Users\\MGUREKEN\\eclipse-workspace\\MemoryCard\\src\\database\\registers.txt");
 		fScore = new File("C:\\Users\\MGUREKEN\\eclipse-workspace\\MemoryCard\\src\\database\\scores.txt");
-	}
-	
-	public boolean LoginControl(String username, String password)
-	{
-		boolean result = false;
-		int index;
-		String pswControl;
-		
-		index = usernames.bul(username);
-		if(index>-1)
-		{
-			pswControl = passwords.getir(index);
-			if(pswControl.equals(password))
-			{
-				userScores[0] = levels.getir(index);
-				userScores[1] = points.getir(index);
-				result = true;
-			}
-		}
-		return result;
-	}
-	
-	public boolean NewUserControl(String username, String password)
-	{
-		boolean result=true;
 		
 		/*dosyanin sadece son satirini okuma islemi yapilmali
 		 * oyle olursa, vectorlist'lerin silinmesine gerek kalmaz.*/
@@ -99,7 +74,33 @@ public class RegisterControl {
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
+
+	}
+	
+	public boolean LoginControl(String username, String password)
+	{
+		boolean result = false;
+		int index;
+		String pswControl;
 		
+		index = usernames.bul(username);
+		if(index>-1)
+		{
+			pswControl = passwords.getir(index);
+			if(pswControl.equals(password))
+			{
+				userScores[0] = levels.getir(index);
+				userScores[1] = points.getir(index);
+				result = true;
+			}
+		}
+		return result;
+	}
+	
+	public boolean NewUserControl(String username, String password)
+	{
+		boolean result=true;
+				
 		/*varolan bir kullanici mi*/
 		if(usernames.icerir(username))
 		{
