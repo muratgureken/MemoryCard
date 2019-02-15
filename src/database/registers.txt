@@ -1,5 +1,7 @@
-deneme777:13:0:0
-deneme777:13:0:0
-deneme777:13:0:0
-emel:123:0:0
-zeytin:10:0:0
+murat:123:5:1
+emel:123:10:10
+zeytin:123:1:0
+nina:123:1:0
+burak:123:3:0
+ahmet:123:5:0
+mehmet:123:6:0
