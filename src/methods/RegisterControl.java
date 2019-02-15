@@ -45,8 +45,8 @@ public class RegisterControl {
 	{
 		/*INITIAL*/
 		/*registers.txt dosyasini oku.*/
-		fReg = new File("C:\\Users\\mgureken\\Documents\\NetBeansProjects\\MemoryCard-master\\src\\database\\registers.txt");
-		fScore = new File("C:\\Users\\mgureken\\Documents\\NetBeansProjects\\MemoryCard-master\\src\\database\\scores.txt");
+		fReg = new File("C:\\Users\\MGUREKEN\\eclipse-workspace\\MemoryCard\\src\\database\\registers.txt");
+		fScore = new File("C:\\Users\\MGUREKEN\\eclipse-workspace\\MemoryCard\\src\\database\\scores.txt");
 		
 		/*dosyanin sadece son satirini okuma islemi yapilmali
 		 * oyle olursa, vectorlist'lerin silinmesine gerek kalmaz.*/

@@ -34,7 +34,7 @@ public class DefineCardBoundaries {
 		ColumnNumber.put(14, 7);
 		ColumnNumber.put(16, 8);
 
-                /*soldan saga ofset*/
+		/*soldan saga ofset*/
 		FirstElementY.put(2, 360);
 		FirstElementY.put(3, 305);
 		FirstElementY.put(4, 250);
@@ -46,19 +46,19 @@ public class DefineCardBoundaries {
 		FirstElementY.put(14, 85);
 		FirstElementY.put(16, 30);
 
-                /*yukaridan asagiya ofset*/
-		FirstElementX.put(2, 215);
-		FirstElementX.put(3, 215);
-		FirstElementX.put(4, 215);
-		FirstElementX.put(6, 135);
-		FirstElementX.put(8, 55);
-		FirstElementX.put(9, 135);
-		FirstElementX.put(10, 55);
-		FirstElementX.put(12, 55);
-		FirstElementX.put(14, 55);
-		FirstElementX.put(16, 55);
+		/*yukaridan asagiya ofset*/
+		FirstElementX.put(2, 225);
+		FirstElementX.put(3, 225);
+		FirstElementX.put(4, 225);
+		FirstElementX.put(6, 145);
+		FirstElementX.put(8, 65);
+		FirstElementX.put(9, 145);
+		FirstElementX.put(10, 65);
+		FirstElementX.put(12, 65);
+		FirstElementX.put(14, 65);
+		FirstElementX.put(16, 65);
 	}
-	
+
 	public VectorList<Integer> getBoundaries() {
 		return boundaries;
 	}
@@ -70,7 +70,7 @@ public class DefineCardBoundaries {
 	public void CalculateBoundaries(int cardNumber)
 	{
 		int rowNo, columnNo, posX, posY, posX1, posY1;
-		
+
 		boundaries.temizle();
 		if(RowNumber.containsKey(cardNumber))
 		{
