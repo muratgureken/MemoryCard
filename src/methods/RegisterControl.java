@@ -45,8 +45,8 @@ public class RegisterControl {
 	{
 		/*INITIAL*/
 		/*registers.txt dosyasini oku.*/
-		fReg = new File("C:\\Users\\MGUREKEN\\eclipse-workspace\\MemoryCard\\src\\database\\registers.txt");
-		fScore = new File("C:\\Users\\MGUREKEN\\eclipse-workspace\\MemoryCard\\src\\database\\scores.txt");
+		fReg = new File("C:\\Users\\mgureken\\Documents\\NetBeansProjects\\MemoryCard-master\\src\\database\\registers.txt");
+		fScore = new File("C:\\Users\\mgureken\\Documents\\NetBeansProjects\\MemoryCard-master\\src\\database\\scores.txt");
 		
 		/*dosyanin sadece son satirini okuma islemi yapilmali
 		 * oyle olursa, vectorlist'lerin silinmesine gerek kalmaz.*/
@@ -83,7 +83,8 @@ public class RegisterControl {
 		int index;
 		String pswControl;
 		
-		index = usernames.bul(username);
+                usernames.setDeger(username);
+		index = usernames.bul();
 		if(index>-1)
 		{
 			pswControl = passwords.getir(index);
@@ -177,10 +178,12 @@ public class RegisterControl {
 		
 		/*listeyi puana gore sirala*/
 		points2Scr.sirala();
-		userRanking = points2Scr.bul(""+point)+1;
+                points2Scr.setDeger(""+point);
+		userRanking = points2Scr.bul()+1;
 		for(int i=0; i<3; i++)
 		{
-			index = pointsScr.bul(points2Scr.getir(points2Scr.boyut()-(i+1)));
+			points2Scr.setDeger(points2Scr.getir(points2Scr.boyut()-(i+1)));
+                        index = pointsScr.bul();
 			topThree[3*i] = usernamesScr.getir(index);
 			topThree[3*i+1] = levelsScr.getir(index);
 			topThree[3*i+2] = pointsScr.getir(index);

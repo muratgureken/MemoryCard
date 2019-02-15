@@ -34,27 +34,29 @@ public class DefineCardBoundaries {
 		ColumnNumber.put(14, 7);
 		ColumnNumber.put(16, 8);
 
-		FirstElementX.put(2, 415);
-		FirstElementX.put(3, 360);
-		FirstElementX.put(4, 305);
-		FirstElementX.put(6, 305);
-		FirstElementX.put(8, 305);
-		FirstElementX.put(9, 195);
-		FirstElementX.put(10, 250);
-		FirstElementX.put(12, 195);
-		FirstElementX.put(14, 140);
-		FirstElementX.put(16, 85);
+                /*soldan saga ofset*/
+		FirstElementY.put(2, 360);
+		FirstElementY.put(3, 305);
+		FirstElementY.put(4, 250);
+		FirstElementY.put(6, 250);
+		FirstElementY.put(8, 250);
+		FirstElementY.put(9, 140);
+		FirstElementY.put(10, 195);
+		FirstElementY.put(12, 140);
+		FirstElementY.put(14, 85);
+		FirstElementY.put(16, 30);
 
-		FirstElementY.put(2, 270);
-		FirstElementY.put(3, 270);
-		FirstElementY.put(4, 270);
-		FirstElementY.put(6, 190);
-		FirstElementY.put(8, 110);
-		FirstElementY.put(9, 190);
-		FirstElementY.put(10, 110);
-		FirstElementY.put(12, 110);
-		FirstElementY.put(14, 110);
-		FirstElementY.put(16, 110);
+                /*yukaridan asagiya ofset*/
+		FirstElementX.put(2, 215);
+		FirstElementX.put(3, 215);
+		FirstElementX.put(4, 215);
+		FirstElementX.put(6, 135);
+		FirstElementX.put(8, 55);
+		FirstElementX.put(9, 135);
+		FirstElementX.put(10, 55);
+		FirstElementX.put(12, 55);
+		FirstElementX.put(14, 55);
+		FirstElementX.put(16, 55);
 	}
 	
 	public VectorList<Integer> getBoundaries() {
@@ -79,12 +81,12 @@ public class DefineCardBoundaries {
 			System.out.println("row:"+rowNo+" col:"+columnNo);	
 			for(int i=0; i<rowNo; i++)
 			{
-				posX = posX1 + 110*i;
+				posX = posX1 + 160*i;
 				for(int j=0; j<columnNo; j++)
 				{
-					posY = posY1 + 160*j;
-					boundaries.ekle(posX);
+					posY = posY1 + 110*j;
 					boundaries.ekle(posY);
+					boundaries.ekle(posX);
 				}
 			}
 		}

@@ -9,7 +9,18 @@ public class VectorList<T>{
 	private int boylimit;
 	private int boy;
 	private static int BOY_ARTIS=10;
+        private T deger;
 
+    public T getDeger() {
+        return deger;
+    }
+
+    public void setDeger(T deger) {
+        this.deger = deger;
+    }
+        
+        
+        
 	public VectorList() {
 		boy = 0;
 		boylimit = BOY_ARTIS;
@@ -155,7 +166,7 @@ public class VectorList<T>{
 			else if(dizi[0].getClass().toString().contains("Double"))
 			{
 				Double[] dizi1 = new Double[boy];
-				Kopyala(dizi1,1);;
+				Kopyala(dizi1,1);
 				Double sonuc1 = maksbul(dizi1);
 				sonuc = (T)sonuc1;
 			}
@@ -164,7 +175,7 @@ public class VectorList<T>{
 	}        
 
 
-	public int bul(T deger)
+	public int bul()
 	{
 		int index=-1;
 		
@@ -174,33 +185,33 @@ public class VectorList<T>{
 			{
 				Integer[] dizi1 = new Integer[boy];
 				Kopyala(dizi1,1);
-				index = bul(dizi1, (int)deger);
+				index = bul(dizi1);
 				
 			}
 			else if(dizi[0].getClass().toString().contains("Float"))
 			{
 				Float[] dizi1 = new Float[boy];
 				Kopyala(dizi1,1);
-				index = bul(dizi1, (float)deger);
+				index = bul(dizi1);
 			}
 			else if(dizi[0].getClass().toString().contains("Double"))
 			{
 				Double[] dizi1 = new Double[boy];
 				Kopyala(dizi1,1);
-				index = bul(dizi1, (double)deger);
+				index = bul(dizi1);
 			}
 			else if(dizi[0].getClass().toString().contains("String"))
 			{
 				String[] dizi1 = new String[boy];
 				Kopyala(dizi1,1);
-				index = bul(dizi1, (String)deger);
+				index = bul(dizi1);
 			}
 		}
 		
 		return index;
 	}
 	
-	public int bul(String[] dizi, String deger)
+	public int bul(String[] dizi)
 	{				
 		int index= -1;
 		
@@ -216,7 +227,7 @@ public class VectorList<T>{
 		return index;
 	}
 
-	public int bul(Integer[] dizi, int deger)
+	public int bul(Integer[] dizi)
 	{				
 		int index= -1;
 		
@@ -232,7 +243,7 @@ public class VectorList<T>{
 		return index;
 	}
 
-	public int bul(Float[] dizi, float deger)
+	public int bul(Float[] dizi)
 	{				
 		int index= -1;
 		
@@ -248,7 +259,7 @@ public class VectorList<T>{
 		return index;
 	}
 	
-	public int bul(Double[] dizi, double deger)
+	public int bul(Double[] dizi)
 	{				
 		int index= -1;
 		

@@ -18,10 +18,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import java.awt.SystemColor;
+import vectorList.VectorList;
 
 public class MemoryCard extends JFrame{
 	
-	int maxCardType=21,cardNumber;
+	int maxCardType=21,cardNumber, anlikKartSayisi=0, toplamKartSayisi=0;
 	String[] images = new String[maxCardType];
 	private String[] userScores=new String[2];
 	private JTextField txtUserName;
@@ -32,6 +33,7 @@ public class MemoryCard extends JFrame{
 	RegisterControl rg;
 	RandomCardChoose rcc;
 	DefineCardBoundaries dcb;
+	VectorList<Integer> cardRegister=new VectorList<Integer>();
 	
 	public MemoryCard() {
 		getContentPane().setBackground(Color.WHITE);
@@ -134,6 +136,10 @@ public class MemoryCard extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				if(e.getSource() instanceof JButton)
 				{
+                                    anlikKartSayisi = anlikKartSayisi%2;
+                                    anlikKartSayisi = anlikKartSayisi+1;
+                                    //sleep(1000);
+                                    toplamKartSayisi++;
 				}
 			}
 		};
@@ -182,16 +188,20 @@ public class MemoryCard extends JFrame{
 				lblSagPanel.setVisible(false);
 				lblBaslik.setVisible(false);
 				lblGiris.setVisible(false);
-				cardNumber = rcc.SelectCards(1, maxCardType);
+				cardNumber = rcc.SelectCards(19, maxCardType);
 				dcb.CalculateBoundaries(cardNumber);
+                                cardRegister.temizle();
 				int j;
 				for(int i=0; i<cardNumber*2; i++)
 				{
 					j=i%cardNumber;
-					System.out.println("indis"+rcc.getCardOrders().getir(i)+" boundaries:"+dcb.getBoundaries().getir(i*2)+" "+dcb.getBoundaries().getir(i*2+1));
-					array[rcc.getCardOrders().getir(i)].setBounds(dcb.getBoundaries().getir(i*2), dcb.getBoundaries().getir(i*2+1), 100, 150);
-					array[rcc.getCardOrders().getir(i)].setIcon(new ImageIcon(getClass().getResource(images[rcc.getCards().getir(j)])));
-					array[rcc.getCardOrders().getir(i)].setVisible(true);
+					//System.out.println("indis:"+rcc.getCardOrders().getir(i)+" boundaries:"+dcb.getBoundaries().getir(rcc.getCardOrders().getir(i))+" "+dcb.getBoundaries().getir(rcc.getCardOrders().getir(i)+1));
+                                        //System.out.println("orders: "+rcc.getCardOrders().getir(i)+" "+(rcc.getCardOrders().getir(i)+1));
+					array[i].setBounds(dcb.getBoundaries().getir(2*rcc.getCardOrders().getir(i)), dcb.getBoundaries().getir(2*rcc.getCardOrders().getir(i)+1), 100, 150);
+					//array iconlarini bir vectorlist'te tut. Kart acilacagi zaman set edilecek.
+                                        cardRegister.ekle(rcc.getCards().getir(j));
+                                        array[i].setIcon(new ImageIcon(getClass().getResource(images[rcc.getCards().getir(j)])));
+					array[i].setVisible(true);
 				}
 
 				//rcc.cardOrders;
