@@ -18,9 +18,7 @@ public class VectorList<T>{
     public void setDeger(T deger) {
         this.deger = deger;
     }
-        
-        
-        
+               
 	public VectorList() {
 		boy = 0;
 		boylimit = BOY_ARTIS;

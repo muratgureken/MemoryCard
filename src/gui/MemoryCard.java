@@ -24,7 +24,7 @@ import vectorList.VectorList;
 
 public class MemoryCard extends JFrame{
 	Semaphore sem = new Semaphore(0); 
-	int zamanKriteri=10;
+	int zamanKriteri=20;
 	int maxCardType=21,cardNumber, anlikKartSayisi=0, toplamKartSayisi=0, oncekiKart, oncekiKartID, level;
 	int miliseconds,seconds,minutes;
 	String[] images = new String[maxCardType];
@@ -192,7 +192,15 @@ public class MemoryCard extends JFrame{
 										if(seconds==zamanKriteri)
 										{
 											state = false;
-											userScores[0] = Integer.toString(level);
+											toplamKartSayisi = 0;
+											anlikKartSayisi = 0;
+											seciliKartlar.temizle();											//kullanici level gelistirmisse
+											System.out.println("Zaman doldu: yeni level:"+level+" eskisi:"+userScores[0]);
+											if(level>Integer.parseInt(userScores[0]))
+											{
+												rg.UpdateUserInfo(txtUserName.getText(), level);
+												userScores[0] = Integer.toString(level);
+											}
 											lblNScoreTable.setText("TIME IS OVER !...");
 											/*TIMEDELAY*/
 											oncekiEkranaDon();
@@ -256,7 +264,8 @@ public class MemoryCard extends JFrame{
 								state = false;
 								//oyun bitti
 								lblNScoreTable.setText("YOU WIN :)");
-								userScores[0] = Integer.toString(level);
+								rg.UpdateUserInfo(txtUserName.getText(), level-1);
+								userScores[0] = Integer.toString(level-1);
 							}
 							else
 							{
@@ -289,18 +298,30 @@ public class MemoryCard extends JFrame{
 
 				System.out.println("user name:"+txtUserName.getText());
 				System.out.println("userkosul:"+(txtUserName.getText().isEmpty())+" pswkosul:"+(pswPassword.getText().isEmpty()));
-				System.out.println("userkosul:"+(txtUserName.getText().contains(" "))+" pswkosul:"+(pswPassword.getText().contains(" ")));
-				
-				if((txtUserName.getText().isEmpty())||(pswPassword.getText().isEmpty()))
+				System.out.println("userkosul1:"+(txtUserName.getText().contains(" "))+" pswkosul1:"+(pswPassword.getText().contains(" ")));
+								
+				if((txtUserName.getText().isEmpty())||(pswPassword.getText().isEmpty())||
+						(txtUserName.getText().contains(" "))||(pswPassword.getText().contains(" "))
+						||(txtUserName.getText().contains(":")))
 				{
-					JOptionPane.showMessageDialog(MemoryCard.this, "Please enter a user name and a password !");										
+					JOptionPane.showMessageDialog(MemoryCard.this, "Please enter valid a user name and a password !");										
 				}
 				else
 				{
 					if(rg.NewUserControl(txtUserName.getText(), pswPassword.getText()))
 					{
-						userScores[0] = ""+1;
-						userScores[0] = ""+0;
+						userScores[0] = Integer.toString(1);
+						userScores[1] = Integer.toString(0);
+						txtUserName.setVisible(false);
+						pswPassword.setVisible(false);
+						btnGiris.setVisible(false);
+						btnYeniKullanici.setVisible(false);
+						btnDevam.setVisible(true);
+						btnYeniOyun.setVisible(true);
+						lblSolPanel.setVisible(true);
+						lblSagPanel.setVisible(true);
+						lblKullancAdi.setVisible(false);
+						lblSifre.setVisible(false);
 					}
 					else
 					{
@@ -327,13 +348,17 @@ public class MemoryCard extends JFrame{
 		btnDevam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				state = true;
+				ilkSecim = true;
+				lblZaman.setText("0:0:0");
 				btnYeniOyun.setVisible(false);
 				btnDevam.setVisible(false);
 				lblSolPanel.setVisible(false);
 				lblSagPanel.setVisible(false);
 				lblBaslik.setVisible(false);
 				lblGiris.setVisible(false);
+				System.out.println("yeni oyuncu contd level"+userScores[0]);
 				level = Integer.parseInt(userScores[0]);
+				System.out.println("yeni oyuncu contd level"+level);
 				cardNumber = rcc.SelectCards(level, maxCardType);
 				dcb.CalculateBoundaries(cardNumber);
 				cardRegister.temizle();
@@ -373,10 +398,12 @@ public class MemoryCard extends JFrame{
 				lblBaslik.setVisible(false);
 				lblGiris.setVisible(false);
 				level = 1;
+				ilkSecim = true;
 				cardNumber = rcc.SelectCards(level, maxCardType);
 				dcb.CalculateBoundaries(cardNumber);
 				lblNScoreTable.setText("LEVEL: "+level);
 				lblKullaniciustkose.setText("USER: "+txtUserName.getText());
+				lblZaman.setText("0:0:0");
 				cardRegister.temizle();
 				int j;
 				for(int i=0; i<cardNumber*2; i++)
@@ -433,7 +460,7 @@ public class MemoryCard extends JFrame{
 		lblZaman = new JLabel("");
 		lblZaman.setFont(new Font("Javanese Text", Font.PLAIN, 18));
 		lblZaman.setForeground(Color.BLUE);
-		lblZaman.setBounds(780, 11, 100, 23);
+		lblZaman.setBounds(829, 11, 84, 23);
 		getContentPane().add(lblZaman);
 
 		for(int i=0; i<array.length; i++)
