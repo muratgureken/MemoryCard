@@ -9,7 +9,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
-
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import sun.print.PrinterJobWrapper;
 import vectorList.*;
 
@@ -47,13 +48,17 @@ public class RegisterControl {
 
 	public RegisterControl()
 	{
+		Path path = Paths.get("");
+		String currentDir = path.toAbsolutePath().toString();
+		
 		/*INITIAL*/
 		/*registers.txt dosyasini oku.*/
-		fReg = new File("C:\\Users\\vektorel\\git\\MemoryCard\\src\\database\\registers.txt");
-		fReg2 = new File("C:\\Users\\vektorel\\git\\MemoryCard\\src\\database\\registersyedek.txt");
-		fReg3 = new File("C:\\Users\\vektorel\\git\\MemoryCard\\src\\database\\oldu.txt");
-		fScore = new File("C:\\Users\\vektorel\\git\\MemoryCard\\src\\database\\scores.txt");
-
+		fReg = new File(currentDir+"\\src\\database\\registers.txt");
+		fReg2 = new File(currentDir+"\\src\\database\\registersyedek.txt");
+		fReg3 = new File(currentDir+"\\src\\database\\oldu.txt");
+		fScore = new File(currentDir+"\\src\\database\\scores.txt");
+//		fReg3 = new File("C:\\Users\\MGUREKEN\\git\\MemoryCard\\src\\database\\oldu.txt");
+		
 		/*dosyanin sadece son satirini okuma islemi yapilmali
 		 * oyle olursa, vectorlist'lerin silinmesine gerek kalmaz.*/
 		usernames.temizle();
