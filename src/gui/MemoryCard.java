@@ -24,7 +24,7 @@ import vectorList.VectorList;
 
 public class MemoryCard extends JFrame{
 	Semaphore sem = new Semaphore(0); 
-	int zamanKriteri=40,secim=0;
+	int zamanKriteri=40,secim=0, timeOut=500;
 	int maxCardType=21,cardNumber, anlikKartSayisi=0, toplamKartSayisi=0, oncekiKart, oncekiKartID, level,suankiKartID;
 	int miliseconds,seconds,minutes;
 	String[] images = new String[maxCardType];
@@ -75,14 +75,6 @@ public class MemoryCard extends JFrame{
 		images[18] = "/images/temelreis.png";
 		images[19] = "/images/toyota.jpg";		
 		images[20] = "/images/zurafa.jpg";
-
-		JButton btnKart1 = new JButton("");
-		//btnKart1.setSelectedIcon(new ImageIcon(MemoryCard.class.getResource("/images/kedi.png")));
-		btnKart1.setBounds(0, 202, 100, 150);
-		//btnKart1.setIcon(new ImageIcon(getClass().getResource("/images/kedi.png")));
-		btnKart1.setIcon(new ImageIcon(getClass().getResource("/images/lor.jpg")));
-		getContentPane().add(btnKart1);
-		btnKart1.setVisible(false);
 		getContentPane().setLayout(null);
 
 		lblGiris = new JLabel("");
@@ -197,7 +189,7 @@ public class MemoryCard extends JFrame{
 											/*TIMEDELAY*/
 											try {
 												mesgul = true;
-												sleep(1000);
+												sleep(timeOut);
 											} catch (InterruptedException e1) {
 												// TODO Auto-generated catch block
 												e1.printStackTrace();
@@ -283,7 +275,7 @@ public class MemoryCard extends JFrame{
 										/*TIMEDELAY*/
 										try {
 											mesgul=true;
-											sleep(1000);
+											sleep(timeOut);
 										} catch (InterruptedException e1) {
 											// TODO Auto-generated catch block
 											e1.printStackTrace();
@@ -297,7 +289,7 @@ public class MemoryCard extends JFrame{
 										/*TIMEDELAY*/
 										try {
 											mesgul=true;
-											sleep(1000);
+											sleep(timeOut);
 										} catch (InterruptedException e1) {
 											// TODO Auto-generated catch block
 											e1.printStackTrace();
@@ -313,7 +305,7 @@ public class MemoryCard extends JFrame{
 									/*TIMEDELAY*/
 									try {
 										mesgul=true;
-										sleep(1000);
+										sleep(timeOut);
 									} catch (InterruptedException e1) {
 										// TODO Auto-generated catch block
 										e1.printStackTrace();
@@ -559,28 +551,6 @@ public class MemoryCard extends JFrame{
 		minutes = 0;
 		miliseconds = 0;
 		seconds = 0;
-	}
-
-	public void zamanDurdur()
-	{
-		try {
-			TimeUnit.SECONDS.sleep(1);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		/*try {
-			sem.acquire();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}*/
 	}
 }
 
