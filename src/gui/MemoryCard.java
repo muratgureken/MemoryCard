@@ -24,8 +24,8 @@ import vectorList.VectorList;
 
 public class MemoryCard extends JFrame{
 	Semaphore sem = new Semaphore(0); 
-	int zamanKriteri=20;
-	int maxCardType=21,cardNumber, anlikKartSayisi=0, toplamKartSayisi=0, oncekiKart, oncekiKartID, level;
+	int zamanKriteri=40,secim=0;
+	int maxCardType=21,cardNumber, anlikKartSayisi=0, toplamKartSayisi=0, oncekiKart, oncekiKartID, level,suankiKartID;
 	int miliseconds,seconds,minutes;
 	String[] images = new String[maxCardType];
 	private String[] userScores=new String[2];
@@ -41,7 +41,7 @@ public class MemoryCard extends JFrame{
 	VectorList<String> seciliKartlar=new VectorList<String>();
 	String coverphoto = "/images/lor.jpg";
 	private JLabel lblKullaniciustkose;
-	boolean ilkSecim=true,state=true;
+	boolean ilkSecim=true,state=true,mesgul=false;
 	private JLabel lblZaman;
 
 	public MemoryCard() {
@@ -145,17 +145,9 @@ public class MemoryCard extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				if(e.getSource() instanceof JButton)
 				{
-					boolean durum=true;
-					JButton button = (JButton) e.getSource();
-					String cardID = button.getName();
-					System.out.println("cardID:"+ cardID);
-					int carddeger = Integer.parseInt(cardID);				    
-					String photo = images[cardRegister.getir(carddeger)];
-					seciliKartlar.setDeger(cardID);
-					/*ilk secimle birlikte zaman baslar*/
-					System.out.println("ilk secim: "+ilkSecim);
 					if(ilkSecim)
 					{
+						//cardChange.start();
 
 						Thread zaman = new Thread()
 						{
@@ -203,7 +195,15 @@ public class MemoryCard extends JFrame{
 											}
 											lblNScoreTable.setText("TIME IS OVER !...");
 											/*TIMEDELAY*/
+											try {
+												mesgul = true;
+												sleep(1000);
+											} catch (InterruptedException e1) {
+												// TODO Auto-generated catch block
+												e1.printStackTrace();
+											}
 											oncekiEkranaDon();
+											mesgul = false;
 										}
 									}
 									else
@@ -217,73 +217,117 @@ public class MemoryCard extends JFrame{
 						zaman.start();
 					}
 
-					/*butonu enabled(false) yapmak goruntusel acidan kotuydu. O sebeple onceden acilan veya cifti bulunan
-					 * kartlar uzerinden aciton alinmasina izin verilmiyor.*/
-					if(seciliKartlar.bul()==-1)
+					Thread oyun = new Thread()
 					{
-						anlikKartSayisi = anlikKartSayisi%2;
-						anlikKartSayisi = anlikKartSayisi+1;
-						if(anlikKartSayisi==1)
-						{			    
-							System.out.println("ilk kez tiklandi");
-							button.setIcon(new ImageIcon(getClass().getResource(photo)));
-							oncekiKart = cardRegister.getir(carddeger);
-							oncekiKartID = carddeger;
-							seciliKartlar.ekle(cardID);
-						}
-						else
+						public void run()
 						{
-							System.out.println("ikinci kez tiklandi");
-							button.setIcon(new ImageIcon(getClass().getResource(photo)));
-							//sem.release();
-							/*ayni kartlar acildi ise*/
-							if(cardRegister.getir(carddeger)==oncekiKart)
+
+							boolean durum=true;
+							JButton button = (JButton) e.getSource();
+							String cardID = button.getName();
+							System.out.println("cardID:"+ cardID);
+							int carddeger = Integer.parseInt(cardID);				    
+							String photo = images[cardRegister.getir(carddeger)];
+							seciliKartlar.setDeger(cardID);
+							suankiKartID = carddeger;
+							/*ilk secimle birlikte zaman baslar*/
+							System.out.println("ilk secim: "+ilkSecim);
+
+							/*butonu enabled(false) yapmak goruntusel acidan kotuydu. O sebeple onceden acilan veya cifti bulunan
+							 * kartlar uzerinden aciton alinmasina izin verilmiyor.*/
+							if((seciliKartlar.bul()==-1)&&!mesgul)
 							{
-								toplamKartSayisi = toplamKartSayisi+2;
-								seciliKartlar.ekle(cardID);
-							}
-							else
-							{
-								/*onceki eklenen eleman da cikarilir.*/
-								seciliKartlar.cikar(seciliKartlar.boyut()-1);
-								durum = false;
+								anlikKartSayisi = anlikKartSayisi%2;
+								anlikKartSayisi = anlikKartSayisi+1;
+								if(anlikKartSayisi==1)
+								{			    
+									System.out.println("ilk kez tiklandi");
+									button.setIcon(new ImageIcon(getClass().getResource(photo)));
+									oncekiKart = cardRegister.getir(carddeger);
+									oncekiKartID = carddeger;
+									seciliKartlar.ekle(cardID);
+								}
+								else
+								{
+									System.out.println("ikinci kez tiklandi");
+									button.setIcon(new ImageIcon(getClass().getResource(photo)));
+									//sem.release();
+									/*ayni kartlar acildi ise*/
+									if(cardRegister.getir(carddeger)==oncekiKart)
+									{
+										toplamKartSayisi = toplamKartSayisi+2;
+										seciliKartlar.ekle(cardID);
+									}
+									else
+									{
+										/*onceki eklenen eleman da cikarilir.*/
+										seciliKartlar.cikar(seciliKartlar.boyut()-1);
+										durum = false;
+									}
+								}
+
+								System.out.println("level kontrol:"+toplamKartSayisi+" "+(cardNumber*2)+" level:"+level);
+
+								if(toplamKartSayisi==(cardNumber*2))
+								{
+									//bu level bitti
+									toplamKartSayisi = 0;
+									anlikKartSayisi = 0;
+									seciliKartlar.temizle();
+									level++;
+									if(level==20)
+									{
+										state = false;
+										//oyun bitti
+										lblNScoreTable.setText("YOU WIN :)");
+										/*TIMEDELAY*/
+										try {
+											mesgul=true;
+											sleep(1000);
+										} catch (InterruptedException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
+										rg.UpdateUserInfo(txtUserName.getText(), level-1);
+										userScores[0] = Integer.toString(level-1);
+										mesgul = false;
+									}
+									else
+									{
+										/*TIMEDELAY*/
+										try {
+											mesgul=true;
+											sleep(1000);
+										} catch (InterruptedException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
+										levelAtla();
+										lblNScoreTable.setText("LEVEL: "+level);
+										mesgul=false;
+									}
+								}
+
+								if((!durum)&&(anlikKartSayisi!=1))
+								{
+									/*TIMEDELAY*/
+									try {
+										mesgul=true;
+										sleep(1000);
+									} catch (InterruptedException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
+									array[oncekiKartID].setIcon(new ImageIcon(getClass().getResource(coverphoto)));
+									button.setIcon(new ImageIcon(getClass().getResource(coverphoto)));
+									mesgul=false;
+								}
 							}
 						}
-
-						System.out.println("level kontrol:"+toplamKartSayisi+" "+(cardNumber*2)+" level:"+level);
-
-						if(toplamKartSayisi==(cardNumber*2))
-						{
-							//bu level bitti
-							toplamKartSayisi = 0;
-							anlikKartSayisi = 0;
-							seciliKartlar.temizle();
-							level++;
-							if(level==20)
-							{
-								state = false;
-								//oyun bitti
-								lblNScoreTable.setText("YOU WIN :)");
-								rg.UpdateUserInfo(txtUserName.getText(), level-1);
-								userScores[0] = Integer.toString(level-1);
-							}
-							else
-							{
-								/*TIMEDELAY*/
-								levelAtla();
-								lblNScoreTable.setText("LEVEL: "+level);
-							}
-						}
-
-						if((!durum)&&(anlikKartSayisi!=1))
-						{
-							/*TIMEDELAY*/
-							zamanDurdur();
-							array[oncekiKartID].setIcon(new ImageIcon(getClass().getResource(coverphoto)));
-							button.setIcon(new ImageIcon(getClass().getResource(coverphoto)));
-						}
-					}
+					};
+					oyun.start();
 				}
+
 			}
 		};
 
@@ -299,7 +343,7 @@ public class MemoryCard extends JFrame{
 				System.out.println("user name:"+txtUserName.getText());
 				System.out.println("userkosul:"+(txtUserName.getText().isEmpty())+" pswkosul:"+(pswPassword.getText().isEmpty()));
 				System.out.println("userkosul1:"+(txtUserName.getText().contains(" "))+" pswkosul1:"+(pswPassword.getText().contains(" ")));
-								
+
 				if((txtUserName.getText().isEmpty())||(pswPassword.getText().isEmpty())||
 						(txtUserName.getText().contains(" "))||(pswPassword.getText().contains(" "))
 						||(txtUserName.getText().contains(":")))
