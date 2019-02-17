@@ -6,3 +6,5 @@ burak:123:3:0
 ahmet:123:5:0
 mehmet:123:6:0
 donald:123:1:0
+erol:123:1:0
+gureken:123:1:0
