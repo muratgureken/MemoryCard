@@ -24,7 +24,7 @@ import vectorList.VectorList;
 
 public class MemoryCard extends JFrame{
 	Semaphore sem = new Semaphore(0); 
-	int zamanKriteri=40,secim=0, timeOut=500;
+	int zamanKriteri=2,secim=0, timeOut=500;
 	int maxCardType=21,cardNumber, anlikKartSayisi=0, toplamKartSayisi=0, oncekiKart, oncekiKartID, level,suankiKartID;
 	int miliseconds,seconds,minutes;
 	String[] images = new String[maxCardType];
@@ -53,6 +53,10 @@ public class MemoryCard extends JFrame{
 		rcc = new RandomCardChoose();
 		dcb = new DefineCardBoundaries();
 
+		minutes = zamanKriteri-1;
+		seconds = 60;
+		miliseconds = 0;
+		
 		/*DEFINE IMAGES*/
 		images[0] = "/images/ananas.jpg";
 		images[1] = "/images/araba.jpg";
@@ -122,6 +126,7 @@ public class MemoryCard extends JFrame{
 					lblSagPanel.setVisible(true);
 					lblKullancAdi.setVisible(false);
 					lblSifre.setVisible(false);
+					lblKullaniciustkose.setText("USER: "+txtUserName.getText());
 				}
 				/*giris basarisiz*/
 				else
@@ -151,35 +156,31 @@ public class MemoryCard extends JFrame{
 									{
 										try {
 											sleep(1);
-											if(miliseconds>999)
+											if(miliseconds==0)
 											{
-												miliseconds = 0;
-												seconds++;
+												miliseconds = 999;
+												seconds--;
 											}
-											if(seconds>=60)
+											if(seconds==0)
 											{
-												seconds = 0;
-												minutes++;
+												seconds = 59;
+												minutes--;
 											}
-											if(minutes>=60)
-											{
-												seconds = 0;
-												minutes = 0;
-											}
+
 											lblZaman.setText(Integer.toString(minutes)+":"+Integer.toString(seconds)+":"+Integer.toString(miliseconds));
-											miliseconds++;
+											miliseconds--;
 
 										} catch (Exception e2) {
 
 										}
 
-										if(seconds==zamanKriteri)
+										if(minutes<0)
 										{
 											state = false;
 											toplamKartSayisi = 0;
 											anlikKartSayisi = 0;
 											seciliKartlar.temizle();											//kullanici level gelistirmisse
-											System.out.println("Zaman doldu: yeni level:"+level+" eskisi:"+userScores[0]);
+											//System.out.println("Zaman doldu: yeni level:"+level+" eskisi:"+userScores[0]);
 											if(level>Integer.parseInt(userScores[0]))
 											{
 												rg.UpdateUserInfo(txtUserName.getText(), level);
@@ -217,13 +218,13 @@ public class MemoryCard extends JFrame{
 							boolean durum=true;
 							JButton button = (JButton) e.getSource();
 							String cardID = button.getName();
-							System.out.println("cardID:"+ cardID);
+							//System.out.println("cardID:"+ cardID);
 							int carddeger = Integer.parseInt(cardID);				    
 							String photo = images[cardRegister.getir(carddeger)];
 							seciliKartlar.setDeger(cardID);
 							suankiKartID = carddeger;
 							/*ilk secimle birlikte zaman baslar*/
-							System.out.println("ilk secim: "+ilkSecim);
+							//System.out.println("ilk secim: "+ilkSecim);
 
 							/*butonu enabled(false) yapmak goruntusel acidan kotuydu. O sebeple onceden acilan veya cifti bulunan
 							 * kartlar uzerinden aciton alinmasina izin verilmiyor.*/
@@ -233,7 +234,7 @@ public class MemoryCard extends JFrame{
 								anlikKartSayisi = anlikKartSayisi+1;
 								if(anlikKartSayisi==1)
 								{			    
-									System.out.println("ilk kez tiklandi");
+									//System.out.println("ilk kez tiklandi");
 									button.setIcon(new ImageIcon(getClass().getResource(photo)));
 									oncekiKart = cardRegister.getir(carddeger);
 									oncekiKartID = carddeger;
@@ -241,9 +242,8 @@ public class MemoryCard extends JFrame{
 								}
 								else
 								{
-									System.out.println("ikinci kez tiklandi");
+									//System.out.println("ikinci kez tiklandi");
 									button.setIcon(new ImageIcon(getClass().getResource(photo)));
-									//sem.release();
 									/*ayni kartlar acildi ise*/
 									if(cardRegister.getir(carddeger)==oncekiKart)
 									{
@@ -258,7 +258,7 @@ public class MemoryCard extends JFrame{
 									}
 								}
 
-								System.out.println("level kontrol:"+toplamKartSayisi+" "+(cardNumber*2)+" level:"+level);
+								//System.out.println("level kontrol:"+toplamKartSayisi+" "+(cardNumber*2)+" level:"+level);
 
 								if(toplamKartSayisi==(cardNumber*2))
 								{
@@ -332,9 +332,9 @@ public class MemoryCard extends JFrame{
 		btnYeniKullanici.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				System.out.println("user name:"+txtUserName.getText());
-				System.out.println("userkosul:"+(txtUserName.getText().isEmpty())+" pswkosul:"+(pswPassword.getText().isEmpty()));
-				System.out.println("userkosul1:"+(txtUserName.getText().contains(" "))+" pswkosul1:"+(pswPassword.getText().contains(" ")));
+				//System.out.println("user name:"+txtUserName.getText());
+				//System.out.println("userkosul:"+(txtUserName.getText().isEmpty())+" pswkosul:"+(pswPassword.getText().isEmpty()));
+				//System.out.println("userkosul1:"+(txtUserName.getText().contains(" "))+" pswkosul1:"+(pswPassword.getText().contains(" ")));
 
 				if((txtUserName.getText().isEmpty())||(pswPassword.getText().isEmpty())||
 						(txtUserName.getText().contains(" "))||(pswPassword.getText().contains(" "))
@@ -358,6 +358,7 @@ public class MemoryCard extends JFrame{
 						lblSagPanel.setVisible(true);
 						lblKullancAdi.setVisible(false);
 						lblSifre.setVisible(false);
+						lblKullaniciustkose.setText("USER: "+txtUserName.getText());
 					}
 					else
 					{
@@ -392,9 +393,9 @@ public class MemoryCard extends JFrame{
 				lblSagPanel.setVisible(false);
 				lblBaslik.setVisible(false);
 				lblGiris.setVisible(false);
-				System.out.println("yeni oyuncu contd level"+userScores[0]);
+				//System.out.println("yeni oyuncu contd level"+userScores[0]);
 				level = Integer.parseInt(userScores[0]);
-				System.out.println("yeni oyuncu contd level"+level);
+				//System.out.println("yeni oyuncu contd level"+level);
 				cardNumber = rcc.SelectCards(level, maxCardType);
 				dcb.CalculateBoundaries(cardNumber);
 				cardRegister.temizle();
@@ -548,9 +549,9 @@ public class MemoryCard extends JFrame{
 		lblSagPanel.setVisible(true);
 		lblBaslik.setVisible(true);
 		lblGiris.setVisible(true);
-		minutes = 0;
+		minutes = zamanKriteri-1;
 		miliseconds = 0;
-		seconds = 0;
+		seconds = 60;
 	}
 }
 

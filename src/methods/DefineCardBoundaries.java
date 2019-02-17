@@ -78,7 +78,7 @@ public class DefineCardBoundaries {
 			columnNo = ColumnNumber.get(cardNumber);
 			posX1 = FirstElementX.get(cardNumber);
 			posY1 = FirstElementY.get(cardNumber);
-			System.out.println("row:"+rowNo+" col:"+columnNo);	
+			//System.out.println("row:"+rowNo+" col:"+columnNo);	
 			for(int i=0; i<rowNo; i++)
 			{
 				posX = posX1 + 160*i;

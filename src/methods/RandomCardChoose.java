@@ -91,14 +91,14 @@ public class RandomCardChoose {
 			randNumber = rand.nextInt(MaxCardTypeNo);
 			cards.ekle(randNumber);
                         cardIndis.cikar(randNumber);
-			System.out.println("rand card : "+randNumber);
+			//System.out.println("rand card : "+randNumber);
 
 			for(int i=1; i<cardNumber; i++)
 			{
 				randNumber = rand.nextInt(MaxCardTypeNo-i);
                                 cards.ekle(cardIndis.getir(randNumber));
                                 cardIndis.cikar(randNumber);
-                                System.out.println("rand card : "+cardIndis.getir(randNumber));
+                                //System.out.println("rand card : "+cardIndis.getir(randNumber));
 			}
 			
                         cardIndisYenile();
@@ -106,18 +106,18 @@ public class RandomCardChoose {
 			randNumber = rand.nextInt(cardNumber*2);
 			cardOrders.ekle(randNumber);
 			cardIndis.cikar(randNumber);
-			System.out.println("rand order : "+randNumber);
+			//System.out.println("rand order : "+randNumber);
 
 			for(int i=1; i<(cardNumber*2); i++)
 			{
 				randNumber = rand.nextInt(cardNumber*2-i);
 				cardOrders.ekle(cardIndis.getir(randNumber));
 				cardIndis.cikar(randNumber);
-				System.out.println("rand order : "+cardIndis.getir(randNumber));
+				//System.out.println("rand order : "+cardIndis.getir(randNumber));
 			}
 		}
-		System.out.println("orders");
-		cardOrders.yazdir(1);
+		/*System.out.println("orders");
+		cardOrders.yazdir(1);*/
 		return cardNumber;
 	}
 
